@@ -4,7 +4,7 @@ ELO calculation library written in .NET Standard.
 
 ## How to use
 
-Calculate a match between two players
+Create and calculate match between two players
 
 ```csharp
 // Create a player with 1200 rating and wins
@@ -22,7 +22,7 @@ EloIndividiualResult player2Result = result.GetResult(player2.Identifier);
 int player1EloDiff = result.GetRatingDifference(player1.Identifier);
 ```
 
-Calculate a match between three players
+Create a match between three players
 
 ```csharp
 // Create a player with 1300 rating and places 1st
@@ -30,8 +30,8 @@ EloPlayer player1 = new EloPlayer(1300, 1);
 // Create a player with 1200 rating and places 2nd
 EloPlayer player2 = new EloPlayer(1200, 2);
 // Create a player with 1350 rating and places 3rd
-EloPlayer player2 = new EloPlayer(1350, 3);
-EloResult result = match.Calculate();
+EloPlayer player3 = new EloPlayer(1350, 3);
+EloMatch match = new EloMatch(player1, player2, player3);
 ```
 
 You can also create match and add players dynamically
