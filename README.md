@@ -1,8 +1,21 @@
-# EloCalculatorNET
+EloCalculatorNET
+=======
 
-ELO calculation library written in .NET Standard.
+[![NuGet](https://img.shields.io/nuget/vpre/elocalculatornet.svg)](https://www.nuget.org/packages/elocalculatornet)
 
-## How to use
+ELO calculation library in .NET
+
+Supports heads up, team and multiplayer calculations
+
+### Installing EloCalculatorNET
+
+You can install [EloCalculatorNET with NuGet](https://www.nuget.org/packages/EloCalculatorNET):
+
+	Install-Package EloCalculatorNET
+    
+Or via the .NET Core CLI:
+
+	dotnet add package EloCalculatorNET
 
 ### Two player scenario
 Create and calculate match between two players
@@ -51,12 +64,12 @@ The calculations is based on:
 var teams = new List<EloTeam>();
 
 for (var i = 0; i < 10; i++)
-    teams.Add(new EloTeam(1200, i == 0));
+teams.Add(new EloTeam(1200, i == 0));
 
 var result = new EloMatch(teams).Calculate();
 
 foreach (var ir in result.GetResults())
-    Console.WriteLine($"{ir.PlayerIdentifier}, rating before: {ir.RatingBefore}, rating after: {ir.RatingAfter}");
+Console.WriteLine($"{ir.PlayerIdentifier}, rating before: {ir.RatingBefore}, rating after: {ir.RatingAfter}");
 ```
 This is calculated as if the first Player won all, and every other player drew.
 
@@ -67,7 +80,7 @@ This is calculated as if the first Player won all, and every other player drew.
 * Get results for each team and print out rating difference for each individual
 
 ```csharp
- var match = new EloMatch();
+var match = new EloMatch();
 var team1 = match.AddTeam(new EloTeam(true));
 match.AddPlayerToTeam(team1, 1230);
 match.AddPlayerToTeam(team1, 1260);
@@ -77,15 +90,17 @@ match.AddPlayerToTeam(team2, 1410);
 var result = match.Calculate();
 
 foreach (var ir in result.GetResults(team1))
-    Console.WriteLine($"Team 1 - Player: {ir.PlayerIdentifier}, Rating difference: {ir.RatingDifference}");
+Console.WriteLine($"Team 1 - Player: {ir.PlayerIdentifier}, Rating difference: {ir.RatingDifference}");
 
 foreach (var ir in result.GetResults(team2))
-    Console.WriteLine($"Team 2 - Player: {ir.PlayerIdentifier}, Rating difference: {ir.RatingDifference}");
+Console.WriteLine($"Team 2 - Player: {ir.PlayerIdentifier}, Rating difference: {ir.RatingDifference}");
 ```
 
 Each team has a rating which is an average of the team members. 
-Team 1 has a rating of 1245
-Team 2 has a rating of 1265.
+
+Team 1 has a rating of 1245 ((1230+1260)/2)
+
+Team 2 has a rating of 1265 ((1120+1410)/2)
 
 ### Get expected score between two ratings
 
@@ -96,5 +111,3 @@ var expectedScore = new EloRating(1460).ExpectedScoreAgainst(1130);
 ```
 
 This returns a float number and in this specific scenario the value is 0.8698499 meaning the higher ranked player is estimated to win 87% of encounters.
-
-

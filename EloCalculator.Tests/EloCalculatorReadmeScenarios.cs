@@ -15,8 +15,10 @@ namespace EloCalculator.Tests
             var player2Identifier = match.AddPlayer(1320, false);
             var result = match.Calculate();
 
-            int player1EloDifference = result.GetRatingDifference(player1Identifier);
-            int player2EloDifference = result.GetRatingDifference(player2Identifier);
+            var player1EloDifference = result.GetRatingDifference(player1Identifier);
+            var player2EloDifference = result.GetRatingDifference(player2Identifier);
+
+            Assert.Greater(player1EloDifference, player2EloDifference);
         }
 
         [Test]
@@ -28,9 +30,13 @@ namespace EloCalculator.Tests
             var player3Identifier = match.AddPlayer(1220, 3);
             var result = match.Calculate();
 
-            int player1NewRating = result.GetRatingAfter(player1Identifier);
-            int player2NewRating = result.GetRatingAfter(player2Identifier);
-            int player3NewRating = result.GetRatingAfter(player3Identifier);
+            var player1NewRating = result.GetRatingAfter(player1Identifier);
+            var player2NewRating = result.GetRatingAfter(player2Identifier);
+            var player3NewRating = result.GetRatingAfter(player3Identifier);
+
+            Assert.Greater(player1NewRating, 1280);
+            Assert.Less(player2NewRating, 1300);
+            Assert.Less(player3NewRating, 1220);
         }
 
         [Test]
@@ -45,6 +51,8 @@ namespace EloCalculator.Tests
 
             foreach (var ir in result.GetResults())
                 Console.WriteLine($"{ir.PlayerIdentifier}, rating before: {ir.RatingBefore}, rating after: {ir.RatingAfter}");
+
+            Assert.Pass();
         }
 
         [Test]
@@ -64,12 +72,16 @@ namespace EloCalculator.Tests
 
             foreach (var ir in result.GetResults(team2))
                 Console.WriteLine($"Team 2 - Player: {ir.PlayerIdentifier}, Rating difference: {ir.RatingDifference}");
+
+            Assert.Pass();
         }
 
         [Test]
         public void GetExpectedScoreScenario()
         {
             var expectedScore = new EloRating(1460).ExpectedScoreAgainst(1130);
+
+            Assert.Greater(expectedScore, 0.5);
         }
     }
 }
