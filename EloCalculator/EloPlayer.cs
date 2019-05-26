@@ -1,23 +1,31 @@
+using EloCalculator.Internal;
 using System;
+using System.Collections.Generic;
 
 namespace EloCalculator
 {
-    public class EloPlayer
+    public class EloPlayer : ValueObject
     {
-        public EloPlayerIdentifier Identifier { get; } = new EloPlayerIdentifier(Guid.NewGuid());
-        public int Rating { get; private set; }
-        public int Place { get; private set; }
+        public EloPlayerIdentifier Identifier { get; }
+        public EloRating Rating { get; private set; }
 
-        public EloPlayer(int rating, int place)
+        public EloPlayer(EloPlayerIdentifier identifier, EloRating rating)
         {
-            Rating = rating;
-            Place = place;
+            Identifier = identifier ?? throw new ArgumentNullException(nameof(identifier));
+            Rating = rating ?? throw new ArgumentNullException(nameof(rating));
         }
 
-        public EloPlayer(int rating, bool won)
+        public EloPlayer(EloPlayerIdentifier identifier, int rating)
+            : this(identifier, new EloRating(rating))
+        { }
+
+        public EloPlayer(int rating)
+            : this(new EloPlayerIdentifier(), new EloRating(rating))
+        { }
+
+        protected override IEnumerable<object> GetEqualityComponents()
         {
-            Rating = rating;
-            Place = won ? 0 : 1;
+            yield return Identifier;
         }
     }
 }

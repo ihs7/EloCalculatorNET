@@ -1,9 +1,9 @@
-using EloCalculator;
 using NUnit.Framework;
 using System.Collections.Generic;
 
-namespace Tests
+namespace EloCalculator.Tests
 {
+    [TestFixture]
     public class EloCalculatorTests
     {
         [Test]
@@ -37,29 +37,28 @@ namespace Tests
         }
 
         [Test]
-        public void MultiMatch_1000Contestants_DoesNotThrow()
+        public void MultiMatch_100Contestants_DoesNotThrow()
         {
             var match = new EloMatch();
 
             Assert.DoesNotThrow(() =>
             {
-                for (int i = 0; i < 1000; i++)
+                for (var i = 0; i < 100; i++)
                 {
-                    match.AddPlayer(i + 1200, i);
+                    _ = match.AddPlayer(i + 1200, i == 0 ? true : false);
                 }
 
                 var result = match.Calculate();
-                int x = 0;
             });
         }
 
         [Test]
         public void SimpleMatch_Player1Wins()
         {
-            var player1 = new EloPlayer(1200, true);
-            var player2 = new EloPlayer(1300, false);
-            var players = new List<EloPlayer> { player1, player2 };
-            var match = new EloMatch(players);
+            var player1 = new EloPlayer(1200);
+            var player2 = new EloPlayer(1300);
+            var teams = new List<EloTeam> { new EloTeam(player1, true), new EloTeam(player2, false) };
+            var match = new EloMatch(teams);
             var result = match.Calculate();
             var player1EloDiff = result.GetRatingDifference(player1.Identifier);
             var player2EloDiff = result.GetRatingDifference(player2.Identifier);
@@ -70,9 +69,9 @@ namespace Tests
         [Test]
         public void SimpleMatch_SetKFactorAs0_Player1Wins_NoEloGained()
         {
-            var player1 = new EloPlayer(1200, true);
-            var player2 = new EloPlayer(1300, false);
-            var players = new List<EloPlayer> { player1, player2 };
+            var player1 = new EloPlayer(1200);
+            var player2 = new EloPlayer(1300);
+            var players = new List<EloTeam> { new EloTeam(player1, true), new EloTeam(player2, false) };
             var match = new EloMatch(players);
             match.SetKFactor(0);
             var result = match.Calculate();
@@ -84,9 +83,33 @@ namespace Tests
         }
 
         [Test]
-        public void SimpleMatch_DoesNotThrow()
+        public void SimpleMatch_ByWon_DoesNotThrow()
         {
-            Assert.DoesNotThrow(() => new EloMatch(new EloPlayer(1200, true), new EloPlayer(1500, false)).Calculate());
+            Assert.DoesNotThrow(() => new EloMatch(new[] { new EloTeam(1200, true), new EloTeam(1500, false) }).Calculate());
+        }
+
+        [Test]
+        public void SimpleMatch_ByPlace_DoesNotThrow()
+        {
+            Assert.DoesNotThrow(() => new EloMatch(new[] { new EloTeam(1200, 1), new EloTeam(1500, 2) }).Calculate());
+        }
+
+        [Test]
+        public void EloExpected_HigherEloShouldBeExpectedToWin()
+        {
+            var expectedScore1 = new EloRating(1400).ExpectedScoreAgainst(1300);
+            var expectedScore2 = new EloRating(1300).ExpectedScoreAgainst(1400);
+
+            Assert.Greater(expectedScore1, expectedScore2);
+        }
+
+        [Test]
+        public void EloExpected_EqualEloShouldHaveSameValue()
+        {
+            var expectedScore1 = new EloRating(1300).ExpectedScoreAgainst(1300);
+            var expectedScore2 = new EloRating(1300).ExpectedScoreAgainst(1300);
+
+            Assert.AreEqual(expectedScore1, expectedScore2);
         }
     }
 }

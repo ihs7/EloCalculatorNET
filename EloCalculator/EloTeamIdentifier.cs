@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace EloCalculator
 {
-    public class EloPlayerIdentifier : ValueObject
+    public class EloTeamIdentifier : ValueObject
     {
         public Guid Value { get; }
 
-        public EloPlayerIdentifier(Guid value)
+        public EloTeamIdentifier(Guid value)
         {
             if (value == default)
                 throw new ArgumentException(nameof(value) + " is default Guid.");
@@ -16,11 +16,11 @@ namespace EloCalculator
             Value = value;
         }
 
-        public EloPlayerIdentifier()
+        public EloTeamIdentifier()
             : this(Guid.NewGuid())
         { }
 
-        public static implicit operator Guid(EloPlayerIdentifier x)
+        public static implicit operator Guid(EloTeamIdentifier x)
             => x.Value;
 
         public override string ToString()

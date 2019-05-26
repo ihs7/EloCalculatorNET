@@ -4,16 +4,21 @@ namespace EloCalculator
 {
     public class EloIndividualResult
     {
-        public EloPlayerIdentifier Identifier { get; }
-        public int RatingBefore { get; }
-        public int RatingAfter { get; }
+        public EloPlayerIdentifier PlayerIdentifier { get; }
+        public EloTeamIdentifier TeamIdentifier { get; }
+        public EloRating RatingBefore { get; }
+        public EloRating RatingAfter { get; }
         public int RatingDifference => RatingAfter - RatingBefore;
 
-        public EloIndividualResult(EloPlayerIdentifier identifier, int ratingBefore, int ratingAfter)
+        public EloIndividualResult(EloPlayerIdentifier playerIdentifier, EloTeamIdentifier teamIdentifier, EloRating ratingBefore, EloRating ratingAfter)
         {
-            Identifier = identifier ?? throw new ArgumentNullException(nameof(identifier));
+            PlayerIdentifier = playerIdentifier ?? throw new ArgumentNullException(nameof(playerIdentifier));
+            TeamIdentifier = teamIdentifier ?? throw new ArgumentNullException(nameof(teamIdentifier));
             RatingBefore = ratingBefore;
             RatingAfter = ratingAfter;
         }
+
+        public override string ToString()
+            => $"Player identifier: {PlayerIdentifier}, Rating before: {RatingBefore}, Rating after: {RatingAfter}, Rating difference {RatingDifference}";
     }
 }
