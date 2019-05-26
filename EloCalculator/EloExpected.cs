@@ -7,8 +7,8 @@ namespace EloCalculator
         /// <summary>
         /// Calculates the expected score between two players.
         /// </summary>
-        /// <param name="playerRating">Player to calculate expected score for.</param>
-        /// <param name="versusRating">Opponent to calculate expected score against.</param>
+        /// <param name="player">Player to calculate expected score for.</param>
+        /// <param name="opponent">Opponent to calculate expected score against.</param>
         /// <returns>Returns a float value between 0 and 1 representing the likelyhood of player winning another.</returns>
         public static float ExpectedScoreAgainst(this EloPlayer player, EloPlayer opponent)
             => ExpectedScore(player.Rating, opponent.Rating);

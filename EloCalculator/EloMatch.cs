@@ -20,6 +20,9 @@ namespace EloCalculator
             if (teams.GetPlayerIdentifiers().Distinct().Count() != teams.GetPlayerIdentifiers().Count())
                 throw new ArgumentException($"Multiple players with same identifier.");
 
+            if (teams.GetTeamIdentifiers().Distinct().Count() != teams.Count())
+                throw new ArgumentException($"Multiple teams with same identifier");
+
             foreach (var team in teams)
             {
                 if (!_teams.Add(team))

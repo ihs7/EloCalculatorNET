@@ -1,7 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <Description>ELO calculation library</Description>
+    <Copyright>Copyright Ívar Haukur Sævarsson</Copyright>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <AssemblyName>EloCalculator</AssemblyName>
+    <PackageId>EloCalculatorNET</PackageId>
+    <PackageTags>elo;chess</PackageTags>
+    <Version>1.0.0</Version>
+    <Authors>Ívar Haukur Sævarsson</Authors>
+    <PackageProjectUrl>https://github.com/ihs7/EloCalculatorNET</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>git://github.com/ihs7/EloCalculatorNET</RepositoryUrl>
+    <Product>EloCalculatorNET</Product>
+    <Company>Ívar Haukur Sævarsson</Company>
   </PropertyGroup>
-
 </Project>

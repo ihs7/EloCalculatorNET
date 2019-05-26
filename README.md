@@ -67,9 +67,13 @@ This is calculated as if the first Player won all, and every other player drew.
 * Get results for each team and print out rating difference for each individual
 
 ```csharp
-var match = new EloMatch();
+ var match = new EloMatch();
 var team1 = match.AddTeam(new EloTeam(true));
+match.AddPlayerToTeam(team1, 1230);
+match.AddPlayerToTeam(team1, 1260);
 var team2 = match.AddTeam(new EloTeam(false));
+match.AddPlayerToTeam(team2, 1120);
+match.AddPlayerToTeam(team2, 1410);
 var result = match.Calculate();
 
 foreach (var ir in result.GetResults(team1))
