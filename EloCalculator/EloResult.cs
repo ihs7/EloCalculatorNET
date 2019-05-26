@@ -24,11 +24,17 @@ namespace EloCalculator
             return result;
         }
 
+        public IEnumerable<EloIndividualResult> GetResults()
+            => _results;
+
         public IEnumerable<EloIndividualResult> GetResults(EloTeamIdentifier teamIdentifier)
             => _results.Where(x => x.TeamIdentifier == teamIdentifier);
 
         public int GetRatingDifference(EloPlayerIdentifier identifier)
             => GetResult(identifier).RatingDifference;
+
+        public int GetRatingAfter(EloPlayerIdentifier identifier)
+            => GetResult(identifier).RatingAfter;
 
         public override string ToString()
         {
